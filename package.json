@@ -15,7 +15,7 @@
   "version": "1.0.0",
   "main": "App.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watch",
     "start": "nodemon App.js"
   },
   "keywords": [],
