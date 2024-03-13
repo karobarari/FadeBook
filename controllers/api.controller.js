@@ -1,4 +1,3 @@
-const fs = require("fs");
 const { fetchEndpoints } = require("../models/api.model");
 
 const getAllEndpoints = async (req, res, next) => {

@@ -1,5 +1,16 @@
 {
   "GET /api/": {
     "description": "serves up a json representation of all the available endpoints of the api"
+  },
+  "POST /api/users": {
+    "description": "posts a new user",
+    "queries": [],
+    "exampleResponse": {
+      "name": "Karo",
+      "email": "String",
+      "phoneNumber": "07898076401",
+      "bookings": 1,
+      "admin": false
+    }
   }
 }
