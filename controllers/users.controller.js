@@ -16,4 +16,12 @@ exports.postUser = async (req, res, next) => {
     next();
   }
 };
-exports.getAllUsers = async () => {};
+exports.getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(500).send(err);
+    next();
+  }
+};

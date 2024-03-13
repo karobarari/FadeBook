@@ -55,7 +55,27 @@ describe("POST api/users", () => {
     };
     const response = await request(app).post("/api/users").send(newUser);
     expect(response.status).toBe(400);
-    expect(response.body.message).toBe("User validation failed: name: Path `name` is required.");
+    expect(response.body.message).toBe(
+      "User validation failed: name: Path `name` is required."
+    );
   });
 });
-
+describe("GET api/users", () => {
+  test("should respond with 200 status", async () => {
+    const response = await request(app).get("/api/users");
+    expect(response.status).toBe(200);
+  });
+  test("should respond with 200 status", async () => {
+    const response = await request(app).get("/api/users");
+    expect(response.status).toBe(200);
+    response.body.forEach((object) => {
+      expect(object).toMatchObject({
+        name: expect.any(String),
+        email: expect.any(String),
+        phoneNumber: expect.any(String),
+        bookings: expect.any(Number),
+        admin: expect.any(Boolean),
+      });
+    });
+  });
+});
