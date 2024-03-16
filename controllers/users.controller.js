@@ -25,3 +25,21 @@ exports.getAllUsers = async (req, res, next) => {
     next();
   }
 };
+exports.getOneUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).send(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next();
+  }
+};
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    res.status(200).send(deletedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next();
+  }
+};

@@ -79,3 +79,54 @@ describe("GET api/users", () => {
     });
   });
 });
+describe("GET api/users/:id", () => {
+  test("should respond with 200 status", async () => {
+    const response = await request(app).get(
+      "/api/users/65f1a9537f0d99630a4eeb39"
+    );
+    expect(response.status).toBe(200);
+  });
+  test("should respond with the correct user", async () => {
+    const response = await request(app).get(
+      "/api/users/65f1ec7c05a4cb8494a93fb2"
+    );
+    const user = {
+      name: "Amelia",
+      email: "AmeliaHernandez@gmail.com",
+      phoneNumber: "07891234568",
+      bookings: 2,
+      admin: false,
+    };
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject(user);
+  });
+  test("should respond with the correct user", async () => {
+    const response = await request(app).get("/api/users/notExist");
+    const user = {
+      name: "Amelia",
+      email: "AmeliaHernandez@gmail.com",
+      phoneNumber: "07891234568",
+      bookings: 2,
+      admin: false,
+    };
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe(
+      'Cast to ObjectId failed for value "notExist" (type string) at path "_id" for model "User"'
+    );
+  });
+});
+describe("DELETE api/users/:id", () => {
+  test("should respond with 200 status", async () => {
+    const response = await request(app).delete(
+      "/api/users/65f1addbf045f7c63eedfbf7"
+    );
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      name: expect.any(String),
+      email: expect.any(String),
+      phoneNumber: expect.any(String),
+      bookings: expect.any(Number),
+      admin: expect.any(Boolean),
+    });
+  });
+});
