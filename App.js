@@ -1,6 +1,7 @@
 const express = require("express");
 const apiEndPoints = require("./Routs/apiEndPoints");
 const usersRoute = require("./Routs/usersrRoute");
+const appointmentsRoute = require("./Routs/apointmentsRoute")
 const mongoose = require("mongoose");
 require("dotenv").config({
   path: `${__dirname}/.env.main`,
@@ -23,7 +24,7 @@ const app = express();
 app.use(express.json());
 app.use("/api", apiEndPoints);
 app.use("/api/users", usersRoute);
-// app.use("api/appointments", appointmentsRoute);
+app.use("/api/appointments", appointmentsRoute);
 
 
 

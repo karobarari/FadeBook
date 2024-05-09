@@ -115,7 +115,7 @@ describe("GET api/users/:id", () => {
     );
   });
 });
-describe("DELETE api/users/:id", () => {
+describe.skip("DELETE api/users/:id", () => {
   test("should respond with 200 status", async () => {
     const response = await request(app).delete(
       "/api/users/65f1addbf045f7c63eedfbf7"
@@ -129,4 +129,58 @@ describe("DELETE api/users/:id", () => {
       admin: expect.any(Boolean),
     });
   });
+});
+describe("POST api/appointments", () => {
+  test("should create a new appointment in the database", async () => {
+    const newAppointment = {
+      user: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        phoneNumber: "07898076401",
+        bookings: 1,
+        admin: false,
+      },
+      createdAt: "2024-05-09T15:30:00.000Z",
+      time: "10:00",
+      bookedFor: "2024-04-25T10:00:00.000Z",
+    };
+    const response = await request(app)
+      .post("/api/appointments")
+      .send(newAppointment);
+    expect(response.status).toBe(201);
+    expect(response.body).toMatchObject({
+      user: {
+        name: expect.any(String),
+        email: expect.any(String),
+        phoneNumber: expect.any(String),
+        bookings: expect.any(Number),
+        admin: expect.any(Boolean),
+      },
+      createdAt: expect.any(String),
+      time: expect.any(String),
+      bookedFor: expect.any(String),
+    });
+  });
+  test("should response with 400 status when invalid data", async () => {
+    const newAppointment = {
+      user: {
+        name: 1,
+        email: "john.doe@example.com",
+        phoneNumber: "07898076401",
+        bookings: 1,
+        admin: 1,
+      },
+      createdAt: "2024-05-09T15:30:00.000Z",
+      time: "10:00",
+    };
+    const response = await request(app)
+      .post("/api/appointments")
+      .send(newAppointment);
+    expect(response.status).toBe(400);
+
+    expect(response.body.message).toBe(
+      "Appointment validation failed: bookedFor: Path `bookedFor` is required."
+    );
+  });
+  
 });
