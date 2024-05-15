@@ -140,7 +140,7 @@ describe("POST api/appointments", () => {
         bookings: 1,
         admin: false,
       },
-      createdAt: "2024-05-09T15:30:00.000Z",
+      createdAt: "",
       time: "10:00",
       bookedFor: "2024-04-25T10:00:00.000Z",
     };
@@ -170,7 +170,7 @@ describe("POST api/appointments", () => {
         bookings: 1,
         admin: 1,
       },
-      createdAt: "2024-05-09T15:30:00.000Z",
+      createdAt: "2024-03-09T15:30:00.000Z",
       time: "10:00",
     };
     const response = await request(app)
@@ -184,8 +184,9 @@ describe("POST api/appointments", () => {
   });
 });
 describe("GET api/appointments", () => {
-  test("should respons with all appointments and 200 status", async () => {
+  test("should respons with all appointments", async () => {
     const response = await request(app).get("/api/appointments");
+
     response.body.forEach((appointment) => {
       expect(appointment).toMatchObject({
         user: {
@@ -199,5 +200,9 @@ describe("GET api/appointments", () => {
         time: expect.any(String),
       });
     });
+  });
+  test("should respond with 200 status", async () => {
+    const response = await request(app).get("/api/appointments");
+    expect(response.status).toBe(200);
   });
 });

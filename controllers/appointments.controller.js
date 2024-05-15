@@ -28,9 +28,8 @@ exports.getAllAppointments = async (req, res, next) => {
     res.status(200).send(appointments);
   } catch (err) {
     res
-      .status(500)
-      .send({ message: "An error occurred while fetching appointments." });
+      .status(404)
+      .send({ message: "Aappointment not found" });
     next();
   }
 };
- 
