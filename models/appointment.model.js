@@ -8,11 +8,14 @@ const appointmentSchema = new mongoose.Schema({
     bookings: { type: Number, required: true },
     admin: { type: Boolean, required: true },
   },
-  createdAt: { type: String, required: true },
-  time: { type: String, required: true },
-  bookedFor: { type: String, required: true }
+  createdAt: { type: Date, default: Date.now },  
+  time: { type: String, required: true },  
+  bookedFor: { type: String, required: true } 
+}, {
+  timestamps: true  
 });
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);
 
 module.exports = Appointment;
+  

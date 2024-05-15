@@ -182,5 +182,22 @@ describe("POST api/appointments", () => {
       "Appointment validation failed: bookedFor: Path `bookedFor` is required."
     );
   });
-  
+});
+describe("GET api/appointments", () => {
+  test("should respons with all appointments and 200 status", async () => {
+    const response = await request(app).get("/api/appointments");
+    response.body.forEach((appointment) => {
+      expect(appointment).toMatchObject({
+        user: {
+          name: expect.any(String),
+          email: expect.any(String),
+          phoneNumber: expect.any(String),
+          bookings: expect.any(Number),
+          admin: expect.any(Boolean),
+        },
+        createdAt: expect.any(String),
+        time: expect.any(String),
+      });
+    });
+  });
 });

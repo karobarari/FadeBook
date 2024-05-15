@@ -4,7 +4,7 @@ exports.postAppointment = async (req, res, next) => {
   const appointment = new Appointment({
     user: {
       name: req.body.user.name,
-      email:req.body.user.email,
+      email: req.body.user.email,
       phoneNumber: req.body.user.email,
       bookings: req.body.user.bookings,
       admin: req.body.user.admin,
@@ -17,8 +17,20 @@ exports.postAppointment = async (req, res, next) => {
     const newAppointment = await appointment.save();
 
     res.status(201).send(newAppointment);
-  } catch (err) {  
-        res.status(400).json({ message: err.message });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
     next();
   }
 };
+exports.getAllAppointments = async (req, res, next) => {
+  try {
+    const appointments = await Appointment.find();
+    res.status(200).send(appointments);
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "An error occurred while fetching appointments." });
+    next();
+  }
+};
+ 
