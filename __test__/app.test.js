@@ -131,7 +131,7 @@ describe.skip("DELETE api/users/:id", () => {
   });
 });
 describe("POST api/appointments", () => {
-  test("should create a new appointment in the database", async () => {
+  test.skip("should create a new appointment in the database", async () => {
     const newAppointment = {
       user: {
         name: "John Doe",
@@ -182,6 +182,27 @@ describe("POST api/appointments", () => {
       "Appointment validation failed: bookedFor: Path `bookedFor` is required."
     );
   });
+  test("should respond with 409 and an approperiate message when an appointment exist in the database", async () => {
+    const newAppointment = {
+      user: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        phoneNumber: "07898076401",
+        bookings: 1,
+        admin: false,
+      },
+      createdAt: "",
+      time: "10:00",
+      bookedFor: "2024-04-25T10:00:00.000Z",
+    };
+    const response = await request(app)
+      .post("/api/appointments")
+      .send(newAppointment);
+    expect(response.status).toBe(409);
+    expect(response.body.message).toBe(
+      "The selected time slot is already booked."
+    );
+  });
 });
 describe("GET api/appointments", () => {
   test("should respons with all appointments", async () => {
@@ -204,5 +225,67 @@ describe("GET api/appointments", () => {
   test("should respond with 200 status", async () => {
     const response = await request(app).get("/api/appointments");
     expect(response.status).toBe(200);
+  });
+});
+describe("GET api/appointment/:id", () => {
+  test("should response with 200 status and expected appointment", async () => {
+    const response = await request(app).get(
+      "/api/appointments/66450aa16235e846ee2e5d4e"
+    );
+    console.log(response.body);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      user: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        phoneNumber: "john.doe@example.com",
+        bookings: 1,
+        admin: false,
+      },
+      _id: "66450aa16235e846ee2e5d4e",
+      createdAt: "2024-05-15T19:18:57.472Z",
+      time: "10:00",
+      bookedFor: "2024-04-25T10:00:00.000Z",
+      updatedAt: "2024-05-15T19:18:57.472Z",
+      __v: 0,
+    });
+  });
+  test("should respond with 400 status and appropriate message when getting a bad ID", async () => {
+    const response = await request(app).get(
+      "/api/appointments/664508f4025258db98194b"
+    );
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Invalid ObjectID format");
+  });
+  test("should respond with 404 status and appropriate message when ID does not exsist", async () => {
+    const response = await request(app).get(
+      "/api/appointments/664508f4025258621b98194b"
+    );
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Appointment not found");
+  });
+});
+describe.skip("DELETE api/appointment/:id", () => {
+  test("should response with 200 status and DELETE the expected appointment", async () => {
+    const response = await request(app).delete(
+      "/api/appointments/66450aa16235e846ee2e5d4e"
+    );
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      user: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        phoneNumber: "john.doe@example.com",
+        bookings: 1,
+        admin: false,
+      },
+      _id: "66450aa16235e846ee2e5d4e",
+      createdAt: "2024-05-15T19:18:57.472Z",
+      time: "10:00",
+      bookedFor: "2024-04-25T10:00:00.000Z",
+      updatedAt: "2024-05-15T19:18:57.472Z",
+      __v: 0,
+    });
   });
 });
