@@ -12,5 +12,82 @@
       "bookings": 1,
       "admin": false
     }
+  },
+  "GET /api/users": {
+    "description": "serves an array of user objects",
+    "queries": [],
+    "exampleResponse": {
+      "name": "Karo",
+      "email": "String",
+      "phoneNumber": "07898076401",
+      "bookings": 1,
+      "admin": false
+    }
+  },
+  "GET /api/users/:id": {
+    "description": "serves a user object ",
+    "queries": [],
+    "exampleResponse": {
+      "name": "Karo",
+      "email": "String",
+      "phoneNumber": "07898076401",
+      "bookings": 1,
+      "admin": false
+    }
+  },
+  "DELETE /api/users/:id": {
+    "description": "deletes the expected user",
+    "queries": [],
+    "exampleResponse": {
+      "name": "Karo",
+      "email": "String",
+      "phoneNumber": "07898076401",
+      "bookings": 1,
+      "admin": false
+    }
+  },
+  "POST /api/appointments": {
+    "description": "posts a new appointment object",
+    "queries": [],
+    "exampleResponse": {
+      "name": "Karo",
+      "email": "String",
+      "phoneNumber": "07898076401",
+      "bookings": 1,
+      "admin": false
+    }
+  },
+  "GET /api/appointments": {
+    "description": "serves an arrya of appointments",
+    "queries": [],
+    "exampleResponse": {
+      "name": "Karo",
+      "email": "String",
+      "phoneNumber": "07898076401",
+      "bookings": 1,
+      "admin": false
+    }
+  },
+  "GET /api/appointment/:id": {
+    "description": "serves a appointment object",
+    "queries": [],
+    "exampleResponse": {
+      "name": "Karo",
+      "email": "String",
+      "phoneNumber": "07898076401",
+      "bookings": 1,
+      "admin": false
+    }
+  },
+  "DELETE /api/appointments": {
+    "description": "deletes the expected appointment",
+    "queries": [],
+    "exampleResponse": {
+      "name": "Karo",
+      "email": "String",
+      "phoneNumber": "07898076401",
+      "bookings": 1,
+      "admin": false
+    }
   }
 }
